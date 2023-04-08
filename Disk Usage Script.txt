@@ -1,0 +1,15 @@
+#!/bin/bash   # Declare the shebang line, indicating that this is a Bash script.
+
+# Get the disk usage of the /dev/sda2 partition and assign it to the $space variable.
+space=$(df -h | grep /dev/sda2 | awk '{print $5}')
+
+max=20%   # Set the maximum allowable disk usage to 20%.
+
+# Compare the current disk usage to the maximum allowable usage.
+if [ ${space%?} -ge ${max%?} ]; then
+  # If the current usage is greater than or equal to the maximum, display a warning message.
+  echo "Hey, Warning Root disk usage is $space at $(date)"
+
+  # Send an email warning message to the specified email address.
+  mail -v -s "Memory usage warning" youremaila@gmail.com
+fi   # End the if statement.
